@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import FirebaseContext from '../context/firebase';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 
 export default function Login() {
+  const navigate = useNavigate();
   const { app } = useContext(FirebaseContext);
 
   const [emailAdress, setEmailAdress] = useState('');
@@ -18,11 +19,12 @@ export default function Login() {
 
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, emailAdress, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('tak', user);
+      .then(() => {
+        navigate(ROUTES.DASHBOARD);
       })
       .catch((error) => {
+        setEmailAdress('');
+        setPassword('');
         setError(error.message);
       });
   };

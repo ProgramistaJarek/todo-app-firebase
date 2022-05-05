@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import FirebaseContext from '../context/firebase';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 
 export default function Signup() {
-  const { app } = useContext(FirebaseContext);
+  const navigate = useNavigate();
+  const { app, db } = useContext(FirebaseContext);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -20,18 +22,31 @@ export default function Signup() {
     e.preventDefault();
 
     const auth = getAuth(app);
-    signInWithEmailAndPassword(auth, emailAdress, password)
+    createUserWithEmailAndPassword(auth, emailAdress, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('tak', user);
+
+        addDoc(collection(db, 'users'), {
+          email: emailAdress,
+          firstName: firstName,
+          lastName: lastName,
+          notes: [],
+          uid: user.uid,
+        });
+        navigate(ROUTES.DASHBOARD);
       })
       .catch((error) => {
+        setFirstName('');
+        setLastName('');
+        setEmailAdress('');
+        setPassword('');
+        setRepeatPassword('');
         setError(error.message);
       });
   };
 
   useEffect(() => {
-    document.title = 'Login - Notes';
+    document.title = 'Sign up - Notes';
   }, []);
 
   return (
