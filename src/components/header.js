@@ -1,4 +1,5 @@
-import { app, db } from '../lib/firebase';
+import { app } from '../lib/firebase';
+import { getAuth, signOut } from 'firebase/auth';
 
 function Header() {
   return (
@@ -17,10 +18,14 @@ function Header() {
           <button
             type="button"
             title="Sign Out"
-            onClick={() => app.auth().signOut()}
+            onClick={() => {
+              const auth = getAuth();
+              signOut(auth);
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                app.auth().signOut();
+                const auth = getAuth();
+                signOut(auth);
               }
             }}
           >

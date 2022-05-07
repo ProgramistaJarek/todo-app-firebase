@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import './styles/index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
+import useAuthListener from './hooks/use-auth-listener';
 // import { db } from './lib/firebase';
 // import { collection, getDocs } from 'firebase/firestore';
 
@@ -10,6 +11,7 @@ const SignUp = lazy(() => import('./pages/signup'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
 
 function App() {
+  const { user } = useAuthListener();
   // const getUsers = async () => {
   //   const citiesCol = collection(db, 'users');
   //   const citySnapshot = await getDocs(citiesCol);
