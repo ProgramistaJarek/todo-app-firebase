@@ -1,17 +1,21 @@
-import { app, db } from '../lib/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
 
-export async function doesUsernameExist(emailAdress) {
-  //   const result = await app
-  //     .firestore()
-  //     .collection('users')
-  //     .where('email', '==', email.toLowerCase())
-  //     .get();
+export async function saveNote(noteTitle, noteText, userId) {
+  return await addDoc(collection(db, 'notes'), {
+    title: noteTitle,
+    text: noteText,
+    uid: userId,
+  });
+}
 
-  //   return result.docs.length > 0;
-  const usersRef = collection(db, 'users');
+export async function getNotes(userId) {
+  const q = query(collection(db, 'notes'), where('uid', '==', userId));
 
-  const q = query(usersRef, where('email', '==', emailAdress.toLowerCase()));
-
-  return q.getDocs;
+  const querySnapshot = await getDocs(q);
+  const notes = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    docId: doc.id,
+  }));
+  return notes;
 }

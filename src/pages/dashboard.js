@@ -9,7 +9,7 @@ function Dashboard() {
   return (
     <div className="bg-gray-background">
       <Header />
-      Dashboard
+      <h1 className="text-center">Add a note!</h1>
     </div>
   );
 }
