@@ -11,7 +11,7 @@ const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/signup'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
 const AddNote = lazy(() => import('./components/add-note'));
-const ShowNotes = lazy(() => import('./components/show-notes'));
+const ShowNotes = lazy(() => import('./components/notes/index'));
 
 function App() {
   const { user } = useAuthListener();
