@@ -54,9 +54,9 @@ function AddNote() {
           >
             <option value="">Pick a color</option>
             <option value="#00FF00">Green</option>
-            <option value="red">Red</option>
+            <option value="#FF0000">Red</option>
             <option value="#0000FF">Blue</option>
-            <option value="yellow">Yellow</option>
+            <option value="#FFFF00">Yellow</option>
           </select>
           <button type="submit">Add</button>
         </form>

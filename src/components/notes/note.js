@@ -1,15 +1,26 @@
-function Note({ id, text, title, bgColor }) {
+import { deleteNote } from '../../services/firebase';
+
+function Note({ id, text, title, bgColor, noteId }) {
+
+  const handleDelete = async () => {
+    await deleteNote(noteId);
+  };
+
   return (
     <>
       <div
         className={
           bgColor
-            ? `flex flex-col bg-${bgColor} p-4 m-2 rounded-md w-40 h-40`
+            ? `flex flex-col p-4 m-2 rounded-md w-40 h-48`
             : `flex flex-col bg-[red] p-4 m-2 rounded-md w-40 h-48`
         }
+        style={{ backgroundColor: `${bgColor}` }}
       >
         <p>{title}</p>
         <p className="overflow-hidden whitespace-nowrap">{text}</p>
+        <button type="button" onClick={handleDelete}>
+          Delete
+        </button>
       </div>
     </>
   );

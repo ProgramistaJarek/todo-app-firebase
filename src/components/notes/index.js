@@ -19,7 +19,7 @@ function ShowNotes() {
     }
     checkNotesInDatabase();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [notes]);
 
   return (
     <>
@@ -35,6 +35,7 @@ function ShowNotes() {
                 text={e.text}
                 title={e.title}
                 bgColor={e.bgColor}
+                noteId={e.docId}
               />
             );
           })

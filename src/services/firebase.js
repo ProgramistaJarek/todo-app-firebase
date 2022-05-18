@@ -7,6 +7,8 @@ import {
   where,
   Timestamp,
   orderBy,
+  deleteDoc,
+  doc,
 } from 'firebase/firestore';
 
 export async function saveNote(noteTitle, noteText, userId, color) {
@@ -32,4 +34,8 @@ export async function getNotes(userId) {
     docId: doc.id,
   }));
   return notes;
+}
+
+export async function deleteNote(noteId) {
+  return await deleteDoc(doc(db, 'notes', noteId));
 }
