@@ -11,7 +11,7 @@ function AddNote() {
   const [text, setText] = useState('');
   const [color, setColor] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleAddingNote = async (e) => {
     e.preventDefault();
 
     const photos = await saveNote(title, text, user.uid, color);
@@ -24,12 +24,13 @@ function AddNote() {
   useEffect(() => {
     document.title = 'Add a note';
   }, []);
+
   return (
     <>
       <Header />
       <div className="flex flex-col items-center">
         <h1>Write your note down here!</h1>
-        <form onSubmit={handleLogin} method="POST">
+        <form onSubmit={handleAddingNote} method="POST">
           <input
             aria-label="Title"
             type="text"
