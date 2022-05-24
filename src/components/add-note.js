@@ -28,9 +28,13 @@ function AddNote() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center px-4">
         <h1>Write your note down here!</h1>
-        <form onSubmit={handleAddingNote} method="POST">
+        <form
+          onSubmit={handleAddingNote}
+          method="POST"
+          className="mt-4 flex flex-col container items-end md:max-w-xl"
+        >
           <input
             aria-label="Title"
             type="text"
@@ -52,6 +56,7 @@ function AddNote() {
             id="colors"
             value={color}
             onChange={(e) => setColor(e.target.value)}
+            className="block appearance-none px-4 py-2 pr-8 rounded border"
           >
             <option value="">Pick a color</option>
             <option value="#00FF00">Green</option>
@@ -59,7 +64,12 @@ function AddNote() {
             <option value="#0000FF">Blue</option>
             <option value="#FFFF00">Yellow</option>
           </select>
-          <button type="submit">Add</button>
+          <button
+            type="submit"
+            className="bg-yellow-500 mt-2 py-2 px-6 rounded"
+          >
+            Add
+          </button>
         </form>
       </div>
     </>

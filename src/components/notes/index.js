@@ -26,7 +26,14 @@ function ShowNotes() {
       <Header />
       <div className="flex items-center container m-auto justify-center flex-wrap">
         {!notes ? (
-          <Skeleton count={3} width={640} height={600} className="mb-6" />
+          <Skeleton
+            count={6}
+            width={160}
+            height={192}
+            inline="false"
+            containerClassName="text-center"
+            className="m-2"
+          />
         ) : (
           notes.map((e) => {
             return (
