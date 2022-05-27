@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 
 export async function saveNote(noteTitle, noteText, userId, color) {
-  return await addDoc(collection(db, 'notes'), {
+  return addDoc(collection(db, 'notes'), {
     title: noteTitle,
     text: noteText,
     uid: userId,
@@ -33,9 +33,20 @@ export async function getNotes(userId) {
     ...doc.data(),
     docId: doc.id,
   }));
+
   return notes;
 }
 
 export async function deleteNote(noteId) {
-  return await deleteDoc(doc(db, 'notes', noteId));
+  return deleteDoc(doc(db, 'notes', noteId));
+}
+
+export async function getOneNoteByNoteId(noteId) {
+  const querySnapshot = await getDocs(collection(db, 'notes'));
+  let note;
+  querySnapshot.forEach((doc) => {
+    if (doc.id === noteId) note = doc.data();
+  });
+
+  return note;
 }

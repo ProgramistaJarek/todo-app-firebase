@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Header from './header';
 import { useLocation } from 'react-router-dom';
 
+import { getOneNoteByNoteId } from '../services/firebase';
+
 function EditNote() {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -9,15 +11,19 @@ function EditNote() {
 
   const location = useLocation();
   const state = location.state;
-  console.log(state);
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    console.log('edit');
   };
 
   useEffect(() => {
     document.title = 'Edit a note';
+    async function getOneNote() {
+      const note = await getOneNoteByNoteId(state);
+      setTitle(note.title);
+      setText(note.text);
+    }
+    getOneNote();
   }, []);
 
   return (

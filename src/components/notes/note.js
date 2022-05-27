@@ -1,10 +1,10 @@
 import { deleteNote } from '../../services/firebase';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
 
-function Note({ id, text, title, bgColor, noteId }) {
+function Note({ text, title, bgColor, noteId, fun }) {
   const handleDelete = async () => {
     await deleteNote(noteId);
+    fun();
   };
 
   return (
@@ -12,8 +12,8 @@ function Note({ id, text, title, bgColor, noteId }) {
       <div
         className={
           bgColor
-            ? `flex flex-col p-4 m-2 rounded-md w-40 h-48`
-            : `flex flex-col bg-[red] p-4 m-2 rounded-md w-40 h-48`
+            ? `flex flex-col p-4 m-2 rounded-md w-40 h-48 `
+            : `flex flex-col bg-[#23dfdf] p-4 m-2 rounded-md w-40 h-48 `
         }
         style={{ backgroundColor: `${bgColor}` }}
       >

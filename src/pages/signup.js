@@ -104,7 +104,7 @@ export default function Signup() {
             <button
               disabled={isInvalid}
               type="submit"
-              className={`w-1/3 mx-auto bg-blue-500 text-white rounded h-10 font-bold ${
+              className={`mx-auto bg-blue-500 text-black rounded h-10 font-bold ${
                 isInvalid && 'opacity-50 text-black'
               }`}
             >
