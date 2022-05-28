@@ -2,34 +2,47 @@ import { useState, useEffect } from 'react';
 import Header from './header';
 import { useLocation } from 'react-router-dom';
 
-import { getOneNoteByNoteId } from '../services/firebase';
+import { getOneNoteByNoteId, updateNote } from '../services/firebase';
 
 function EditNote() {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [color, setColor] = useState('');
+  const [styleError, seStyleError] = useState(false);
 
   const location = useLocation();
-  const state = location.state;
+  const noteId = location.state;
 
   const handleEdit = async (e) => {
     e.preventDefault();
+    const didUpdate = await updateNote(title, text, color, noteId);
+    console.log(didUpdate);
+    if (didUpdate) seStyleError(false);
+    else seStyleError(true);
   };
 
   useEffect(() => {
     document.title = 'Edit a note';
     async function getOneNote() {
-      const note = await getOneNoteByNoteId(state);
+      const note = await getOneNoteByNoteId(noteId);
       setTitle(note.title);
       setText(note.text);
     }
     getOneNote();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center px-4">
+        {styleError ? (
+          <div className="bg-red-500 px-16 py-4 rounded mb-4">
+            <p className="font-bold tracking-widest text-center">
+              Something went wrong!
+            </p>
+          </div>
+        ) : null}
         <h1>Edit your note down here!</h1>
         <form
           onSubmit={handleEdit}

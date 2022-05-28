@@ -10,19 +10,16 @@ function ShowNotes() {
   const user = useContext(UserContext);
 
   const [notes, setNotes] = useState();
-  const [updateNotes, setUpdateNotes] = useState();
+  const [updateNotes, setUpdateNotes] = useState(true);
 
   async function checkNotesInDatabase() {
     const gettingNotesFromDatabase = await getNotes(user.uid);
     setNotes(gettingNotesFromDatabase);
     if (updateNotes === true) setUpdateNotes(false);
   }
-  setUpdateNotes("notes");
-  console.log(updateNotes);
 
   useEffect(() => {
     document.title = 'Show a notes';
-
     // if (updateNotes === true)
     checkNotesInDatabase();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,7 +38,7 @@ function ShowNotes() {
             containerClassName="text-center"
             className="m-2"
           />
-        ) : (
+        ) : notes.length ? (
           notes.map((e) => {
             return (
               <Note
@@ -50,11 +47,12 @@ function ShowNotes() {
                 title={e.title}
                 bgColor={e.bgColor}
                 noteId={e.docId}
-                //setUpdateNotes={setUpdateNotes}
                 fun={checkNotesInDatabase}
               />
             );
           })
+        ) : (
+          'No notes'
         )}
       </div>
     </>

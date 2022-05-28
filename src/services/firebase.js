@@ -9,8 +9,10 @@ import {
   orderBy,
   deleteDoc,
   doc,
+  updateDoc,
 } from 'firebase/firestore';
 
+//saves note
 export async function saveNote(noteTitle, noteText, userId, color) {
   return addDoc(collection(db, 'notes'), {
     title: noteTitle,
@@ -21,6 +23,7 @@ export async function saveNote(noteTitle, noteText, userId, color) {
   });
 }
 
+//gets notes
 export async function getNotes(userId) {
   const q = query(
     collection(db, 'notes'),
@@ -37,10 +40,12 @@ export async function getNotes(userId) {
   return notes;
 }
 
+//delete notes
 export async function deleteNote(noteId) {
   return deleteDoc(doc(db, 'notes', noteId));
 }
 
+//get one note
 export async function getOneNoteByNoteId(noteId) {
   const querySnapshot = await getDocs(collection(db, 'notes'));
   let note;
@@ -49,4 +54,22 @@ export async function getOneNoteByNoteId(noteId) {
   });
 
   return note;
+}
+
+//update note
+export async function updateNote(noteTitle, noteText, color, noteId) {
+  const q = doc(db, 'notes', noteId);
+
+  return updateDoc(q, {
+    title: noteTitle,
+    text: noteText,
+    bgColor: color,
+    modificationDate: Timestamp.fromDate(new Date()),
+  })
+    .then(function () {
+      return 1;
+    })
+    .catch(function () {
+      return 0;
+    });
 }
